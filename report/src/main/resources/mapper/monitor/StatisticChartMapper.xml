@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.monitor.StatisticChartMapper">
+  <resultMap id="BaseResultMap" type="com.zdjc.report.model.StatisticChart">
+    <id column="statistic_chart_id" jdbcType="INTEGER" property="statisticChartId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="detection_type_id" jdbcType="INTEGER" property="detectionTypeId" />
+    <result column="detection_type_name" jdbcType="VARCHAR" property="detectionTypeName" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="attributes" jdbcType="VARCHAR" property="attributes" />
+    <result column="sensor_id" jdbcType="VARCHAR" property="sensorId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    statistic_chart_id, project_id, detection_type_id, detection_type_name, table_name, 
+    attributes, sensor_id
+  </sql> 
+  <select id="selectByPojoId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from statistic_chart
+    where project_id = #{poJoId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.zdjc.report.mapper.report.SensorMapper_Report">
+	<resultMap id="BaseResultMap" type="com.zdjc.report.model.Sensor">
+	    <id column="sensor_id" jdbcType="INTEGER" property="sensorId" />
+	    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+	    <result column="monitor_point" jdbcType="VARCHAR" property="monitorPoint" />
+	    <result column="monitor_type" jdbcType="INTEGER" property="monitorType" />
+	    <result column="smu_number" jdbcType="VARCHAR" property="smuNumber" />
+	    <result column="smu_channel" jdbcType="VARCHAR" property="smuChannel" />
+	    <result column="sensor_number" jdbcType="VARCHAR" property="sensorNumber" />
+	    <result column="sensor_type" jdbcType="VARCHAR" property="sensorType" />
+	    <result column="sensor_model" jdbcType="VARCHAR" property="sensorModel" />
+	    <result column="sensor_longitude" jdbcType="VARCHAR" property="sensorLongitude" />
+	    <result column="sensor_latitude" jdbcType="VARCHAR" property="sensorLatitude" />
+	    <result column="sensor_place" jdbcType="VARCHAR" property="sensorPlace" />
+	    <result column="sensor_depth" jdbcType="REAL" property="sensorDepth" />
+   </resultMap>
+   <sql id="Base_Column_List">
+	    sensor_id, project_id, monitor_point, monitor_type, smu_number, smu_channel, sensor_number, 
+	    sensor_type, sensor_model, sensor_longitude, sensor_latitude, sensor_place, sensor_depth
+   </sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	    select 
+	   	 <include refid="Base_Column_List" />
+	    from sensor
+	    where sensor_id = #{sensorId,jdbcType=INTEGER}
+  </select>
+	
+	<insert id="insertSensor" parameterType="com.zdjc.report.model.Sensor" useGeneratedKeys="true" keyProperty="sensorId">
+	    insert into sensor (sensor_id, project_id, monitor_point, 
+	      monitor_type, smu_number, smu_channel, 
+	      sensor_number, sensor_type, sensor_model, 
+	      sensor_longitude, sensor_latitude, sensor_place, 
+	      sensor_depth)
+	    values (#{sensorId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{monitorPoint,jdbcType=VARCHAR}, 
+	      #{monitorType,jdbcType=INTEGER}, #{smuNumber,jdbcType=VARCHAR}, #{smuChannel,jdbcType=VARCHAR}, 
+	      #{sensorNumber,jdbcType=VARCHAR}, #{sensorType,jdbcType=VARCHAR}, #{sensorModel,jdbcType=VARCHAR}, 
+	      #{sensorLongitude,jdbcType=VARCHAR}, #{sensorLatitude,jdbcType=VARCHAR}, #{sensorPlace,jdbcType=VARCHAR}, 
+	      #{sensorDepth,jdbcType=REAL})
+  </insert>
+	
+</mapper>

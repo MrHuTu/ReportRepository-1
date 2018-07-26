@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.report.ProjectMapper">
+
+  <resultMap id="BaseResultMap" type="com.zdjc.report.model.Project">
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_type" jdbcType="INTEGER" property="projectType" />
+    <result column="project_address" jdbcType="VARCHAR" property="projectAddress" />
+    <result column="weather_address" jdbcType="VARCHAR" property="weatherAddress" />
+    <result column="project_longitude" jdbcType="VARCHAR" property="projectLongitude" />
+    <result column="project_latitude" jdbcType="VARCHAR" property="projectLatitude" />
+    <result column="project_begin_time" jdbcType="TIMESTAMP" property="projectBeginTime" />
+    <result column="project_end_time" jdbcType="TIMESTAMP" property="projectEndTime" />
+    <result column="project_status" jdbcType="INTEGER" property="projectStatus" />
+    <result column="project_description" jdbcType="VARCHAR" property="projectDescription" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    project_id, project_name, project_type, project_address, weather_address, project_longitude, project_latitude, 
+    project_begin_time, project_end_time, project_status, project_description
+  </sql>
+ <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from project
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </select>
+  
+ 
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.zdjc.report.mapper.report.AuthorityReportMapper">
+
+	<resultMap type="com.zdjc.report.model.AuthorityReport" id="BaseMap">
+		<id property="id" column="id"/>
+		<result  property="projectId" column="projectId"/>
+		<result  property="reportTyp" column="report_Type"/>
+		<result  property="reportPath" column="report_Path"/>
+		<result  property="reportName" column="report_name"/>
+		<result  property="commit_user" column="commit_user"/>
+		<result  property="commit_time" column="commit_time"/>		
+		<result  property="timeof_Report" column="timeof_Report"/>
+		<result  property="personIn_charge" column="personIn_charge"/>
+	
+	</resultMap>
+	
+	<resultMap type="com.zdjc.report.model.fictitious.PageMode" id="PageMap">
+		
+		<result  property="count" column="count"/>
+		<collection property="dataList" javaType="java.util.List" ofType="com.zdjc.report.model.AuthorityReport" >
+			<id property="id" column="id"/>
+			<result  property="projectId" column="projectId"/>
+			<result  property="reportTyp" column="report_Type"/>
+			<result  property="reportPath" column="report_Path"/>
+			<result  property="reportName" column="report_name"/>
+			<result  property="commit_user" column="commit_user"/>
+			<result  property="commit_time" column="commit_time"/>		
+			<result  property="timeof_Report" column="timeof_Report"/>
+			<result  property="personIn_charge" column="personIn_charge"/>
+		</collection>
+	
+	</resultMap>
+	<resultMap type="com.zdjc.report.model.fictitious.MyPageMode" id="PageMap01">
+		
+		<result  property="count" column="count"/>
+		<collection property="dataList" javaType="java.util.List" ofType="com.zdjc.report.model.AuthorityReport" >
+			<id property="id" column="id"/>
+			<result  property="projectId" column="projectId"/>
+			<result  property="reportTyp" column="report_Type"/>
+			<result  property="reportPath" column="report_Path"/>
+			<result  property="reportName" column="report_name"/>
+			<result  property="commit_user" column="commit_user"/>
+			<result  property="commit_time" column="commit_time"/>		
+			<result  property="timeof_Report" column="timeof_Report"/>
+			<result  property="personIn_charge" column="personIn_charge"/>
+		</collection>
+	
+	</resultMap>
+	
+	<insert id="insertMasage" parameterType="com.zdjc.report.model.AuthorityReport">
+		INSERT  INTO 
+			report_authority   (id,projectId,report_Type,report_Path,report_name,commit_user,commit_time,timeof_Report,personIn_charge) 
+		VALUES
+			(#{id},#{projectId},#{reportTyp},#{reportPath},#{reportName},#{commit_user},#{commit_time},#{timeof_Report},#{personIn_charge})
+	
+	</insert>
+	
+	<select id="selectFileName" resultMap="BaseMap">
+	
+		select 
+			projectId,report_Type,report_Path,report_name, commit_user,commit_time 
+		from 
+			report_authority where projectId=#{projectId} and report_Type=#{reportType} and report_name=#{reportName}
+	</select>
+	
+	
+	<select id="gitFilename" resultMap="BaseMap">
+		select 
+			projectId,report_Type,report_Path,report_name, commit_user,commit_time 
+		from 
+			report_authority where id=#{id} 
+	
+	</select>
+	
+	<select id="gitAllMassageByProjectId" resultMap="PageMap">
+			 select c.* ,a.count 
+		from 
+			 report_authority c,
+			 (select COUNT(*) count from report_authority  where report_authority.projectId=#{projectId}  and report_authority.report_Type=#{reportType} ) a 
+			 where c.projectId=#{projectId} and c.report_Type=#{reportType} limit ${currIndex} , ${pageSize}
+			
+	</select>
+	<select id="getReportAllMassage" resultMap="PageMap01">
+			 select c.* ,a.count 
+		from 
+			 report_authority c,
+			 (select COUNT(*) count from report_authority  where report_authority.projectId=#{projectId}  and report_authority.report_Type=#{reportType} ) a 
+			 where c.projectId=#{projectId} and c.report_Type=#{reportType} limit ${currIndex} , ${pageSize}
+			
+	</select>
+</mapper>

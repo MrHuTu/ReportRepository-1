@@ -1,0 +1,34 @@
+# 模板路径   针对limux操作系统  
+linuxmodelpath:  /data/cbs02/mnt/monitor/model/
+#解析模板之后生成的word文件存放路径(缓存路径,解析之后的报告，报告要用的图片文件等，是个大杂烩，这个目录会定时清理，不必要担心外存不够的问题)  /data/cbs02/mnt/monitor/down/
+linuxdownrepor: /data/cbs02/mnt/monitor/down/
+#文件上传时文件存贮的目录(图片服务器路径)
+linuxuploadfiles: /data/cbs02/mnt/monitor/upload_files/
+
+#报告管理人员pdf文件上传根路径
+linuxpdf: /data/cbs02/mnt/monitor/pdf/
+
+# 模板路径  针对Windows操作系统  (测试用)
+modelpath: D:/temp/
+#解析模板之后生成的word文件存放路径(缓存路径,解析之后的报告，报告要用的图片文件等，是个大杂烩，这个目录会定时清理，不必要担心外存不够的问题)
+downrepor: D:/temp/modelTemp/
+
+#文件上传时文件存贮的目录(测试用)
+uploadfiles: D:/temp/pic/
+
+#报告管理人员pdf文件上传跟路径
+pdf: D:/temp/pdf/
+
+#图片上传时支持的格式
+pictype: .jpg;.png;.gif
+
+#数据归档的时间配置，以;分割 支持格式 00:00:00
+repotrTime: 00:00:00;09:00:00;16:00:00
+
+#归档应答的时间误差（格式00）
+repotrTimeError: 15
+
+#周表取数时间点
+setweek: 16:00:00;16:15:00
+
+

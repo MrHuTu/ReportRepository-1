@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.zdjc.report.mapper.monitor.SensorMapper_Monitor">
+	 <resultMap id="BaseResultMap" type="com.zdjc.report.model.Sensor">
+    <id column="sensor_id" jdbcType="INTEGER" property="sensorId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="monitor_point" jdbcType="VARCHAR" property="monitorPoint" />
+    <result column="monitor_type" jdbcType="INTEGER" property="monitorType" />
+    <result column="smu_number" jdbcType="VARCHAR" property="smuNumber" />
+    <result column="smu_channel" jdbcType="VARCHAR" property="smuChannel" />
+    <result column="sensor_number" jdbcType="VARCHAR" property="sensorNumber" />
+    <result column="sensor_type" jdbcType="VARCHAR" property="sensorType" />
+    <result column="sensor_model" jdbcType="VARCHAR" property="sensorModel" />
+    <result column="sensor_longitude" jdbcType="VARCHAR" property="sensorLongitude" />
+    <result column="sensor_latitude" jdbcType="VARCHAR" property="sensorLatitude" />
+    <result column="sensor_place" jdbcType="VARCHAR" property="sensorPlace" />
+    <result column="sensor_depth" jdbcType="REAL" property="sensorDepth" />
+    
+  </resultMap>
+	
+	<select id="selectSensor" resultMap="BaseResultMap">
+	 	select * from sensor
+	</select>
+	
+</mapper>

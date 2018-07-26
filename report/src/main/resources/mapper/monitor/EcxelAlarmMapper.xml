@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.zdjc.report.mapper.monitor.EcxelAlarmMapper">
+	<resultMap type="com.zdjc.report.model.fictitious.EcxelAlarm" id="BaseMap">
+		<result column="alarm_context" property="alarmContext"/>
+		<result column="create_time" property="createTime"/>
+		<result column="alarm_status" property="alarmStatus"/>		
+	</resultMap>
+	
+	<select id="selectAlarms" resultMap="BaseMap">
+			SELECT	
+			al.alarm_context,
+			al.create_time,
+			al.alarm_status
+		FROM
+			alarm al
+		WHERE
+			al.sensor_number = #{sensorNumber}
+		AND al.smu_number = #{smuNumber}
+		AND al.smu_channel = #{smuChannel}
+		and al.create_time between #{beginTime} and #{endTime}
+	
+	</select>
+	
+	
+</mapper>

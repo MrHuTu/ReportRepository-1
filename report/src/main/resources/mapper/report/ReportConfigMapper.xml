@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.report.ReportConfigMapper">
+	<resultMap id="ReportConfigMap" type="com.zdjc.report.model.ReportConfig">
+			
+		<result column="project_id" property="project_id"/>
+		<result column="switch" property="reportConfig_switch"/>
+		<result column="class_path" property="class_path"/>
+		<result column="word_path" property="word_path"/>
+		<result column="report_typ" property="report_typ"/>
+	</resultMap>	
+ 	<select id="selectReportConfig" resultMap="ReportConfigMap">                         	
+		SELECT rc.project_id,rc.switch,class_path , word_path ,rc.report_typ from report_config rc
+  	</select>
+  	
+  
+  
+  
+</mapper>

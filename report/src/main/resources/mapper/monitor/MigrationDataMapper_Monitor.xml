@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.monitor.MigrationDataMapper_Monitor">
+<resultMap id="ReportData" type="com.zdjc.report.model.ReportData">
+	<!-- <id column="id" property="id"/> -->
+	 <result column="project_id" property="project_id"/>
+	<result column="current_times" property="current_times"/>
+	<result column="first_data" property="first_data"/>
+	<result column="current_data" property="current_data"/>
+	<result column="current_laser_change" property="current_laser_change"/>
+	<result column="total_laser_change" property="total_laser_change"/>	
+	<result column="monitor_type" property="monitor_type"/>
+	
+	<result column="smu_number" property="smu_number"/>	
+	<result column="sensor_number" property="sensor_number"/>
+	<result column="smu_channel" property="smu_channel"/>
+	<result column="first_time" property="first_time"/>
+</resultMap>	
+ 	<select id="selectRepotrData" resultMap="ReportData">                         	
+		select p.project_id, s.current_times, s.first_data, s.current_data, s.current_laser_change, s.total_laser_change, sen.monitor_type,s.first_time,
+		sen.smu_channel,sen.sensor_number,sen.smu_number
+		from ${tableName} s, project p, sensor sen   
+		where s.current_times Between #{beginTime,jdbcType=VARCHAR} and #{endTime,jdbcType=VARCHAR} 
+		and  p.project_id =#{pojoId,jdbcType=VARCHAR}<!-- in (select report_config.project_id from report_config where report_config.switch=1) -->
+		and p.project_id = sen.project_id
+		and sen.smu_channel = s.smu_cms_channel
+		and sen.sensor_number = s.sensor_id
+		and sen.smu_number = s.smu_cms_id 
+		and sen.monitor_type in(select parameter from report_para)	
+		GROUP BY sensor_number ,smu_channel,smu_number	<!-- 2018年4月19日10:08:58补充 -->
+  	</select>
+  
+  
+</mapper>

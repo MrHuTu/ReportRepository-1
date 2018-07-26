@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.zdjc.report.mapper.monitor.EcxelModelMapper">
+	<resultMap type="com.zdjc.report.model.fictitious.EcxelData" id="BaseMap1">
+		<result column="project_name" property="projectName"/>
+		<result column="first_time" property="firstTime"/>
+		<result column="item_name" property="itemName"/>
+		<result column="sensor_number" property="sensorNumber"/>
+		
+		<result column="monitor_point" property="monitorPoint"/>
+		<result column="smu_number" property="smuNumber"/>
+		<result column="smu_channel" property="smuChannel"/>
+		<collection property="datas" javaType="java.util.List" ofType="com.zdjc.report.model.fictitious.EcxelModel">
+			<result column="current_times" property="currentTimes"/>
+			<result column="total_laser_change" property="totalLaserChange"/>
+			<result column="current_laser_change" property="currentLaserChange"/>
+			<result column="speed_change" property="speedChange"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectEcxelModelByProjectId" resultMap="BaseMap1">
+	select 
+		project.project_name,tab.first_time ,sen.sensor_number,sen.monitor_point,sen.smu_number,sen.smu_channel,sys.item_name,
+		date_format(tab.current_times,'%m-%d %H') fortime,
+		tab.current_times,tab.total_laser_change,tab.current_laser_change,tab.speed_change 	
+	from ${tabName}  tab ,(select sen_.smu_number ,sen_.smu_channel,sen_.sensor_number ,sen_.monitor_point ,sen_.monitor_type from sensor  sen_ where sen_.project_id=#{projectId}) sen,project,sys_code sys
+	where 
+		sen.sensor_number = tab.sensor_id
+	and 
+		sen.smu_channel = tab.smu_cms_channel
+	and 
+		sen.smu_number = tab.smu_cms_id
+	and 
+		tab.current_times between   #{beginTime} and #{endTime}   
+	and 
+		(date_format(tab.current_times,'%H')=00  or date_format(tab.current_times,'%H')=08 or   date_format(tab.current_times,'%H')=16)
+	and project.project_id=#{projectId}
+	and sen.monitor_type = sys.sc_id
+	GROUP BY 
+		sensor_number,smu_channel,smu_number,fortime
+	   
+	</select>
+	
+	
+</mapper>

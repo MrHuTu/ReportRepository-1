@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.report.SideTableDataMapper">
+	
+	<resultMap id="SideTableMap" type="com.zdjc.report.model.fictitious.SideTableData">		
+	 		<result column="typ" property="typ" />
+		    <result column="lineOne" property="lineOne" />
+		    <result column="lineTwo"  property="lineTwo" />
+		    <result column="lineThreeCellone"  property="lineThreeCellone" />
+		    <result column="lineThreeCelltwo"  property="lineThreeCelltwo" />
+		    <result column="lineFourCellone" property="lineFourCellone" />
+		    <result column="lineFourCellTwo" property="lineFourCellTwo" />
+		    <result column="lineFiveCellOne"  property="lineFiveCellOne" />
+		    <result column="lineFiveCellTwo"  property="lineFiveCellTwo" />  
+		    <collection property="reportDatas" javaType="java.util.List" ofType="com.zdjc.report.model.ReportData" >	
+			    <result column="current_times"  property="current_times" />
+			    <result column="first_data"  property="first_data" />
+			    <result column="current_data"  property="current_data" />			  
+			    <result column="current_laser_change"  property="current_laser_change" />
+			    <result column="total_laser_change"  property="total_laser_change" />
+			</collection> 
+  </resultMap>
+  <resultMap type="com.zdjc.report.model.fictitious.ReportWeekData_Head" id="weekMap">
+  			<result property="sensorNumber" column="sensorNumber"/>
+  			<result property="smuNumber" column="smuNumber"/>
+  			<result property="smuChannel" column="smuChannel"/>
+  			<result property="monitorPoint" column="monitorPoint"/>
+  			<result property="projectName" column="project_name"/>
+  			<result property="typ" column="typ"/>
+  			<collection property="reportWeekDataDates" ofType="com.zdjc.report.model.fictitious.ReportWeekData_Dates">
+  				<result property="totalLaserChange" column="totalLaserChange"/>
+  				<result property="time" column="time"/>
+  			</collection>
+  
+  </resultMap>
+  <!--取日报数据  -->
+ 	<select id="selectSideTableData" resultMap="SideTableMap">                         	
+		select
+			sen.monitor_type typ,
+			p.project_name lineOne,
+			'湖南中大建设工程检测技术有限公司' lineTwo,
+			r.first_time  lineThreeCellone,
+			'测试人:中大监测云平台' lineThreeCelltwo,
+			sen.sensor_number lineFourCellone,
+			sen.monitor_point lineFourCellTwo,
+			sen.smu_number lineFiveCellOne,
+			sen.smu_channel lineFiveCellTwo,
+			r.current_times,
+			r.current_data,
+			r.first_data,
+			r.current_laser_change,
+			r.total_laser_change
+		from sensor sen,report_data r,project p 
+			where sen.project_id=#{pojoId}  and sen.project_id=p.project_id
+			and sen.monitor_type = r.typ
+			and sen.sensor_number=r.sensor_number
+			and sen.smu_channel = r.smu_channel
+			and sen.smu_number=r.smu_number
+			and r.current_times like #{time}
+  	</select>
+  	<!--取周报数据 '2018-05-28 00:15:00' -->
+	<select id="selectSideTableDataOfWeek" resultMap="SideTableMap" parameterType="java.lang.String">                        	
+	select
+			sen.monitor_type typ,
+			p.project_name lineOne,
+			'湖南中大建设工程检测技术有限公司' lineTwo,
+			r.first_time  lineThreeCellone,
+			'测试人:中大监测云平台' lineThreeCelltwo,
+			sen.sensor_number lineFourCellone,
+			sen.monitor_point lineFourCellTwo,
+			sen.smu_number lineFiveCellOne,
+			sen.smu_channel lineFiveCellTwo,
+			r.current_times,
+			r.current_data,
+			r.first_data,
+			r.current_laser_change,
+			r.total_laser_change
+		from sensor sen,report_data r,project p 
+			where sen.project_id=#{projectId}  and sen.project_id=p.project_id
+			and sen.monitor_type = r.typ
+			and sen.sensor_number=r.sensor_number
+			and sen.smu_channel = r.smu_channel
+			and sen.smu_number=r.smu_number
+			and r.current_times Between #{begin} and #{end}
+			and date_format(r.current_times,'%T') Between #{pointB} and #{pointE}
+
+			
+		</select>
+		
+		
+		<select id="selectReportOfWeek" resultMap="weekMap">		
+			select 
+				r.sensor_number sensorNumber ,r.smu_number smuNumber ,r.smu_channel smuChannel ,r.typ typ,
+				s.monitor_point monitorPoint,  date_format(r.current_times ,'%Y/%m/%d') time,r.total_laser_change totalLaserChange,
+				r.project_id,p.project_name
+			from 
+				report_data r ,sensor s	,project p
+			where 
+				r.project_id=#{projectId} and r.project_id = s.project_id and p.project_id = r.project_id
+				and r.sensor_number = s.sensor_number
+				and r.smu_number =s.smu_number
+				and r.smu_channel = s.smu_channel
+				and r.current_times Between #{begin} and #{end}
+				and date_format(r.current_times,'%T') Between #{pointB} and #{pointE}			
+		</select>
+  
+  
+</mapper>

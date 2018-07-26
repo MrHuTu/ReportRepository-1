@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjc.report.mapper.report.ReportContentDayMapper">
+
+ 	<resultMap type="com.zdjc.report.model.ReportContentDay" id="ReportContentDay">
+ 		<result column="report_main" property="reportMain"/>
+ 		<result column="report_write" property="reportWrite"/>
+ 		<result column="report_approval" property="reportApproval"/>
+ 		<result column="report_ratify" property="reportRatify"/>
+ 		<result column="project_survey" property="projectSurvey"/>
+ 		<result column="project_achievement" property="projectAchievement"/>
+ 		<result column="project_suggest" property="projectSuggest"/>
+ 		<result column="total_laser_change_pic" property="totalLaserChangePic"/>
+ 		<result column="current_laser_change_pic" property="currentLaserChangePic"/>
+ 		<result column="speed_change_pic" property="speedChangePic"/>
+ 		<result column="monitor_poit_pic" property="monitorPoitPic"/>	
+ 		<result column="remark" property="remark"/>
+ 	</resultMap>
+  
+
+  <select id="selectDayConfigById" resultMap="ReportContentDay" parameterType="java.lang.String">
+   	select * from report_content_day where project_id =#{projectId}
+  </select>
+  
+  <insert id="insertDayConfigById" parameterType="com.zdjc.report.model.ReportContentDay">
+  	insert into report_content_day (
+	  	project_id,
+	  	report_main,
+	  	report_write,
+	  	report_approval,
+	  	report_ratify,
+	  	project_survey,
+	  	project_achievement,
+	  	project_suggest,
+	  	total_laser_change_pic,
+	  	current_laser_change_pic,
+	  	speed_change_pic,
+	  	monitor_poit_pic,
+	  	remark) 
+  	values(#{projectId},
+	  	#{reportMain},
+	  	#{reportWrite},
+	  	#{reportApproval},
+	  	#{reportRatify},
+	  	#{projectSurvey},
+	  	#{projectAchievement},
+	  	#{projectSuggest},
+	  	#{totalLaserChangePic},
+	  	#{currentLaserChangePic},
+	  	#{speedChangePic},
+	  	#{monitorPoitPic},
+	  	#{remark}
+	  	)   
+  </insert>
+  	<update id="updateDayConfigById" parameterType="com.zdjc.report.model.ReportContentDay">
+  		update report_content_day
+  		<set>
+  			<if test="reportMain!=null">
+  				report_main =#{reportMain},
+  			</if>
+  			<if test="reportWrite!=null">
+  				report_write=#{reportWrite},
+  			</if>
+  			<if test="reportApproval!=null">
+  				report_approval=#{reportApproval},
+  			</if>
+  			<if test="reportRatify!=null">
+  				report_ratify=#{reportRatify},
+  			</if>
+  			<if test="projectSurvey!=null">
+  				project_survey=#{projectSurvey},
+  			</if>
+  			<if test="projectAchievement!=null">
+  				project_achievement=#{projectAchievement},
+  			</if>
+  			<if test="projectSuggest!=null">
+  				project_suggest=#{projectSuggest},
+  			</if>
+  			<if test="totalLaserChangePic!=null">
+  				total_laser_change_pic=#{totalLaserChangePic},
+  			</if>
+  			<if test="currentLaserChangePic!=null">
+  				current_laser_change_pic=#{currentLaserChangePic},
+  			</if>
+  			<if test="speedChangePic!=null">
+  				speed_change_pic=#{speedChangePic},
+  			</if>
+  			<if test="monitorPoitPic!=null">
+  				monitor_poit_pic=#{monitorPoitPic},
+  			</if>
+  			<if test="remark!=null">
+  				remark=#{remark},
+  			</if>
+  				project_id=project_id
+  		</set>
+  			where project_id =#{projectId}
+  	
+  	</update>
+  
+</mapper>
